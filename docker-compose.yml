@@ -32,3 +32,13 @@ services:
     container_name: producer-opensky
     depends_on:
       - kafka
+  spark-jupyter:
+    image: jupyter/pyspark-notebook:latest
+    hostname: spark-jupyter
+    container_name: spark-jupyter
+    ports:
+      - "8888:8888"
+    depends_on:
+      - kafka
+    environment:
+      - PYSPARK_SUBMIT_ARGS=--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 pyspark-shell
