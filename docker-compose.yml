@@ -27,8 +27,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/var/lib/kafka/data  # Maps logs to local storage.
-  productor-opensky:
+  producer-opensky:
     build: ./producer/ # Folder with the Dockerfile.
-    container_name: productor_opensky
+    container_name: producer-opensky
     depends_on:
       - kafka
