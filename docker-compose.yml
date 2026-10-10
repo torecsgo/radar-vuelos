@@ -24,21 +24,19 @@ services:
       KAFKA_LOG_RETENTION_HOURS: 168  # Log retention period (7 days).
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0  # No rebalance delay.
       CLUSTER_ID: "Mk3OEYBSD34fcwNTJENDM2Qk"  # Unique Kafka cluster ID.
+    restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/var/lib/kafka/data  # Maps logs to local storage.
   producer-opensky:
     build: ./producer/ # Folder with the Dockerfile.
     container_name: producer-opensky
+    restart: always
     depends_on:
       - kafka
-  spark-jupyter:
-    image: jupyter/pyspark-notebook:latest
-    hostname: spark-jupyter
-    container_name: spark-jupyter
-    ports:
-      - "8888:8888"
+  spark-consumer:
+    build: ./spark/
+    container_name: spark_radar_consumer
+    restart: always
     depends_on:
       - kafka
-    environment:
-      - PYSPARK_SUBMIT_ARGS=--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 pyspark-shell
