@@ -40,3 +40,9 @@ services:
     restart: always
     depends_on:
       - kafka
+  dashboard:
+    build: ./dashboard/
+    container_name: radar_dashboard
+    restart: always
+    ports:
+      - "8501:8501"
